@@ -31,7 +31,7 @@ jobs:
           nvim --headless -u tests/minimal_init.lua -c "PlenaryBustedDirectory tests/ {minimal_init = 'tests/minimal_init.lua', sequential = true}"
   docs:
     runs-on: ubuntu-latest
-    needs: test
+    needs: [test, stylua]
     steps:
       - uses: actions/checkout@v3
       - name: panvimdoc
@@ -42,10 +42,10 @@ jobs:
           treesitter: true
       - name: cat
         run: cat doc/intergrater.txt
-      # - name: Push changes
-      #   uses: stefanzweifel/git-auto-commit-action@v4
-      #   with:
-      #     commit_message: "chore(build): auto-generate vimdoc"
-      #     commit_user_name: "github-actions[bot]"
-      #     commit_user_email: "github-actions[bot]@users.noreply.github.com"
-      #     commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+      - name: Push changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore(docs): auto-generate vimdoc"
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "github-actions[bot]@users.noreply.github.com"
+          commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
