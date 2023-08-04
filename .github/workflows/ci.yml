@@ -1,0 +1,51 @@
+on: [push, pull_request]
+name: lint-test
+jobs:
+  stylua:
+    name: stylua
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v3
+      - uses: JohnnyMorganz/stylua-action@v3
+        with:
+          version: latest
+          token: ${{ sscrets.GITHUB_TOKEN }}
+          args: --color always --check .
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        nvim-versions: ['stable', 'nightly']
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - uses: rhysd/action-setup-vim@v1
+        with:
+          neovim: true
+          version: ${{ matrix.nvim-versions }}
+      - name: run tests
+        run: |
+          nvim --version
+          [ ! -d tests ] && exit 0
+          nvim --headless -u tests/minimal_init.lua -c "PlenaryBustedDirectory tests/ {minimal_init = 'tests/minimal_init.lua', sequential = true}"
+  docs:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v3
+      - name: panvimdoc
+        uses: kdheepak/panvimdoc@main
+        with:
+          vimdoc: intergrater
+          demojify: true
+          treesitter: true
+      - name: cat
+        run: cat doc/intergrater.txt
+      # - name: Push changes
+      #   uses: stefanzweifel/git-auto-commit-action@v4
+      #   with:
+      #     commit_message: "chore(build): auto-generate vimdoc"
+      #     commit_user_name: "github-actions[bot]"
+      #     commit_user_email: "github-actions[bot]@users.noreply.github.com"
+      #     commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"

@@ -1,15 +1,13 @@
-# Intergrater.nvim
 
-* A infrastructure of neovim IDE
-* A bridge between various neovim plugins
+A infrastructure of neovim IDE; A bridge between various neovim plugins
 
 <!-- TOC -->
 
-## Install
+# Install
 
 **lazy.nvim**
 ```lua
-{
+return {
 	"AbaoFromCUG/intergrater.nvim",
     config = {
         dap = {
@@ -22,14 +20,15 @@
 }
 ```
 
-## Usages
+# Usages
 
 
-### Core
+## Core
 
 **Commands**
-- [x]register commands
-- [ ]execute from telescope/cmd
+
+- [x] register commands
+- [ ] execute from telescope/cmd
 
 ```lua
 require("intergrater.commands").register_command("myplugin.spec", function()
@@ -48,9 +47,9 @@ end)
 ```
 
 **Variables**
-- [x]builtin variables
-- [x]command variables
-- [ ]input variables
+- [x] builtin variables
+- [x] command variables
+- [ ] input variables
 
 In `.vscode/launch.json` or `dap.configurations`
 
@@ -64,7 +63,8 @@ In `.vscode/launch.json` or `dap.configurations`
             "request": "launch",
             "arg": [
                 "${command:myplugin.spec}",
-                "${command:myplugin.another}"
+                "${command:myplugin.another}",
+                "${file}"
             ]
         }
     ]
@@ -75,22 +75,22 @@ In `.vscode/launch.json` or `dap.configurations`
 
 
 **Launcher**
-- [x]select configuration
-- [x]save/load state to session automatically
-- [ ]multiple type launch
-    - [x]dap
-    - [x]plenary.test_harness
-    - [ ]more unit test
+- [x] select configuration
+- [x] save/load state to session automatically
+- [ ] multiple type launch
+    - [x] dap
+    - [x] plenary.test_harness
+    - [ ] more unit test
 
-### Intergrate
+## Intergrate
 
 **nvim-dap**
-- [x]configuration support `envFile`
-- [x]inject `core.variables`
+- [x] configuration support `envFile`
+- [x] inject `core.variables`
 
 
 **lualine**
-- [x]launcher component
+- [x] launcher component
 
 ```lua
 require("lualine").setup({

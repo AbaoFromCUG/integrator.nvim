@@ -86,7 +86,6 @@ describe("setup", function()
             local called = 0
             funny_adapter.enrich_config(config, function(new_config)
                 called = called + 1
-                -- print(vim.inspect(new_config))
                 assert.are.same(expect, new_config)
             end)
             assert.are.equal(called, 1)

@@ -66,7 +66,6 @@ local builtin_variables_map = {
 ---@return table<string, table|any> # Result config
 ---@nodiscard
 function M.resolve_config(config)
-    print(type(config), vim.inspect(config))
     local resolved_variables = {}
     local function _recusive(tbl)
         local result = {}
