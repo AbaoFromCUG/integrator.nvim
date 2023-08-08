@@ -1,23 +1,23 @@
-*intergrater.txt*          For NVIM v0.8.0         Last change: 2023 August 04
+*integrator.txt*          For NVIM v0.8.0          Last change: 2023 August 08
 
 ==============================================================================
-Table of Contents                              *intergrater-table-of-contents*
+Table of Contents                               *integrator-table-of-contents*
 
-1. Install                                               |intergrater-install|
-2. Usages                                                 |intergrater-usages|
-  - Core                                             |intergrater-usages-core|
-  - Intergrate                                 |intergrater-usages-intergrate|
+1. Install                                                |integrator-install|
+2. Usages                                                  |integrator-usages|
+  - Core                                              |integrator-usages-core|
+  - Integrate                                    |integrator-usages-integrate|
 A infrastructure of neovim IDE; A bridge between various neovim plugins
 
 
 ==============================================================================
-1. Install                                               *intergrater-install*
+1. Install                                                *integrator-install*
 
 **lazy.nvim**
 
 >lua
     return {
-        "AbaoFromCUG/intergrater.nvim",
+        "AbaoFromCUG/integrator.nvim",
         config = {
             dap = {
                 enabled = true
@@ -31,10 +31,10 @@ A infrastructure of neovim IDE; A bridge between various neovim plugins
 
 
 ==============================================================================
-2. Usages                                                 *intergrater-usages*
+2. Usages                                                  *integrator-usages*
 
 
-CORE                                                 *intergrater-usages-core*
+CORE                                                  *integrator-usages-core*
 
 **Commands**
 
@@ -42,12 +42,12 @@ CORE                                                 *intergrater-usages-core*
 - execute from telescope/cmd
 
 >lua
-    require("intergrater.commands").register_command("myplugin.spec", function()
+    require("integrator.commands").register_command("myplugin.spec", function()
         return "result"
     end)
     
     --for async style command variable, such as build task
-    require("intergrater.commands").register_command("myplugin.another", function()
+    require("integrator.commands").register_command("myplugin.another", function()
         local co = coroutine.running()
         return coroutine.create(function()
             vim.ui.select({ "A", "B" }, {}, function(item)
@@ -86,7 +86,7 @@ automatically - [ ] multiple type launch - [x] dap - [x] plenary.test_harness -
 [ ] more unit test
 
 
-INTERGRATE                                     *intergrater-usages-intergrate*
+INTEGRATE                                        *integrator-usages-integrate*
 
 **nvim-dap** - [x] configuration support `envFile` - [x] inject
 `core.variables`
