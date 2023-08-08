@@ -1,8 +1,12 @@
 local M = {}
+
+---function for dap.adapter.enrich_config
+---@param config table
+---@param on_config function(table)
 function M.enrich_config_hook(config, on_config)
     local final_config = vim.deepcopy(config)
     local path = final_config.envFile or vim.fn.getcwd() .. "/.env"
-    local env = require("intergrater.utils").read_env_file(path)
+    local env = require("integrator.utils").read_env_file(path)
     if final_config.env then
         final_config.env = vim.tbl_extend("keep", final_config.env, env)
     else
@@ -16,17 +20,18 @@ local function inject_adapter(adapter)
     adapter.enrich_config = function(old_config, on_config)
         if adapter._enrich_config then
             adapter._enrich_config(old_config, function(new_config)
-                require("intergrater.dap").enrich_config_hook(new_config, on_config)
+                M.enrich_config_hook(new_config, on_config)
             end)
         else
-            require("intergrater.dap").enrich_config_hook(old_config, on_config)
+            M.enrich_config_hook(old_config, on_config)
         end
     end
 end
 
 ---injuct dap
----@param config? intergrater.DapConfiguration
+---@param config? integrator.DapConfiguration
 function M.inject(config)
+    --TODO: support config
     local dap = require("dap")
     setmetatable(dap.adapters, {
         __index = function(_, k)
@@ -39,7 +44,7 @@ function M.inject(config)
         end,
     })
     -- mock dap
-    dap.expand_config_variables = require("intergrater.variable_resolve").resolve
+    dap.expand_config_variables = require("integrator.variable_resolve").resolve
     for _, adapter in pairs(dap.adapters) do
         inject_adapter(adapter)
     end

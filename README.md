@@ -8,7 +8,7 @@ A infrastructure of neovim IDE; A bridge between various neovim plugins
 **lazy.nvim**
 ```lua
 return {
-	"AbaoFromCUG/intergrater.nvim",
+	"AbaoFromCUG/integrator.nvim",
     config = {
         dap = {
             enabled = true
@@ -31,12 +31,12 @@ return {
 - [ ] execute from telescope/cmd
 
 ```lua
-require("intergrater.commands").register_command("myplugin.spec", function()
+require("integrator.commands").register_command("myplugin.spec", function()
 	return "result"
 end)
 
 --for async style command variable, such as build task
-require("intergrater.commands").register_command("myplugin.another", function()
+require("integrator.commands").register_command("myplugin.another", function()
 	local co = coroutine.running()
 	return coroutine.create(function()
 		vim.ui.select({ "A", "B" }, {}, function(item)
@@ -82,7 +82,7 @@ In `.vscode/launch.json` or `dap.configurations`
     - [x] plenary.test_harness
     - [ ] more unit test
 
-## Intergrate
+## Integrate
 
 **nvim-dap**
 - [x] configuration support `envFile`

@@ -59,7 +59,7 @@ function M.pick_process(opts)
 end
 
 function M.read_env_file(path)
-    local result = {}
+    local result = vim.empty_dict()
     if vim.loop.fs_stat(path) then
         for line in io.lines(path) do
             line = vim.trim(line)

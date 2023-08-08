@@ -33,7 +33,7 @@ local builtin_variables_map = {
         return os.getenv(match) or ""
     end,
     command = function(identifier)
-        local handle = require("intergrater.commands").commands[identifier]
+        local handle = require("integrator.commands").commands[identifier]
         local match = string.format("${command:%s}", identifier)
         local error, result
         if type(handle) == "function" then
@@ -51,7 +51,7 @@ local builtin_variables_map = {
         end
         if result == nil or error then
             error = error or string.format("Can't resolve command variable:  %s : the command handle with type(%s)", match, type(handle))
-            vim.notify(error, vim.log.levels.ERROR, { title = "Identifier" })
+            vim.notify(error, vim.log.levels.ERROR, { title = "Integrator" })
             return match
         end
         return result
@@ -87,7 +87,7 @@ end
 ---resolve a string, support variable
 ---@param str string
 ---@param resolved_variables? table<string, string>
----@return string the result
+---@return string #result
 function M.resolve_string(str, resolved_variables)
     resolved_variables = resolved_variables or {}
     local re = "(${(.-)})"
@@ -101,11 +101,14 @@ function M.resolve_string(str, resolved_variables)
             expand = builtin_variables_map[variable](argument)
             resolved_variables[match] = expand
         end
-        result = vim.fn.substitute(result, match, expand, "g")
+        result = vim.fn.substitute(result, match, expand, "g") --[[@as string]]
     end
     return result
 end
 
+---resolve config/string
+---@param value string|table
+---@return string|table
 function M.resolve(value)
     if type(value) == "string" then
         return M.resolve_string(value)

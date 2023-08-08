@@ -1,6 +1,8 @@
 local M = {}
+
+---@type {[string]: function} commands center
 M.commands = {
-    pickProcess = require("intergrater.utils").pick_process,
+    pickProcess = require("integrator.utils").pick_process,
 }
 
 --- Register command style varible, e.g. ${command: cmake.launchTarget}

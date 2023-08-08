@@ -1,18 +1,18 @@
 describe("setup", function()
     describe("dap", function()
         before_each(function()
-            package.loaded["dap"] = require("tests.intergrater.fake.dap")
+            package.loaded["dap"] = require("tests.integrator.fake.dap")
         end)
 
         after_each(function()
             package.loaded["dap"] = nil
-            package.loaded["tests.intergrater.fake.dap"] = nil
+            package.loaded["tests.integrator.fake.dap"] = nil
         end)
 
         it("adapter register order", function()
             local dap = require("dap")
             dap.adapters.funny = { name = "funny" }
-            require("intergrater").setup({
+            require("integrator").setup({
                 dap = {
                     enabled = true,
                 },
@@ -25,7 +25,7 @@ describe("setup", function()
         it("adapter enrich_config", function()
             local dap = require("dap")
             dap.adapters.funny = { name = "funny" }
-            require("intergrater").setup({
+            require("integrator").setup({
                 dap = {
                     enabled = true,
                 },
@@ -33,13 +33,13 @@ describe("setup", function()
 
             local funny_adapter = dap.adapters["funny"]
             local config = {
-                envFile = vim.fn.getcwd() .. "/tests/intergrater/.env",
+                envFile = vim.fn.getcwd() .. "/tests/integrator/.env",
                 env = {
                     PATH = "/another/path",
                 },
             }
             local expect = {
-                envFile = vim.fn.getcwd() .. "/tests/intergrater/.env",
+                envFile = vim.fn.getcwd() .. "/tests/integrator/.env",
                 env = {
                     PATH = "/another/path",
                     VALUE = "1",
@@ -64,7 +64,7 @@ describe("setup", function()
                     on_config(new_config)
                 end,
             }
-            require("intergrater").setup({
+            require("integrator").setup({
                 dap = {
                     enabled = true,
                 },
@@ -72,11 +72,11 @@ describe("setup", function()
 
             local funny_adapter = dap.adapters["funny"]
             local config = {
-                envFile = vim.fn.getcwd() .. "/tests/intergrater/.env",
+                envFile = vim.fn.getcwd() .. "/tests/integrator/.env",
             }
             local expect = {
                 new_name = "funny",
-                envFile = vim.fn.getcwd() .. "/tests/intergrater/.env",
+                envFile = vim.fn.getcwd() .. "/tests/integrator/.env",
                 env = {
                     PATH = "/a/path",
                     VALUE = "1",

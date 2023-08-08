@@ -35,7 +35,7 @@ end
 function M.select()
     local configs = M.configurations()
     if vim.tbl_isempty(configs) then
-        vim.notify("No configuration, please check launch.json" .. vim.inspect(configs), vim.log.levels.WARN, { title = "Intergrater" })
+        vim.notify("No configuration, please check launch.json" .. vim.inspect(configs), vim.log.levels.WARN, { title = "Integrator" })
         return
     end
     vim.ui.select(configs, {
@@ -58,7 +58,7 @@ function M.select_by_name(name)
             end
         end
     end
-    vim.notify(string.format("no named (%s) launch", name), vim.log.levels.WARN, { title = "Intergrater" })
+    vim.notify(string.format("no named (%s) launch", name), vim.log.levels.WARN, { title = "Integrator" })
 end
 
 ---start debug with selected_configuration
@@ -72,7 +72,7 @@ function M.run()
     elseif M.selected_configuration then
         dap.run(M.selected_configuration)
     else
-        vim.notify("not selected launch, please edit launch.json or refresh", vim.log.levels.WARN, { title = "Intergrater" })
+        vim.notify("not selected launch, please edit launch.json or refresh", vim.log.levels.WARN, { title = "Integrator" })
     end
 end
 

@@ -1,6 +1,6 @@
 local M = require("lualine.component"):extend()
 
-local launcher = require("intergrater.launcher")
+local launcher = require("integrator.launcher")
 
 ---@class lualine.components.launcher.Options
 ---@field symbols table<string, string> adapter type map to icon
