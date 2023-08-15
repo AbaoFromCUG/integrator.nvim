@@ -1,4 +1,4 @@
-*integrator.txt*          For NVIM v0.8.0          Last change: 2023 August 08
+*integrator.txt*          For NVIM v0.8.0          Last change: 2023 August 15
 
 ==============================================================================
 Table of Contents                               *integrator-table-of-contents*
@@ -24,6 +24,9 @@ A infrastructure of neovim IDE; A bridge between various neovim plugins
             },
             overseer = {
                 enabled = false
+            },
+            session = {
+                enabled = true
             }
         }
     }
@@ -90,6 +93,8 @@ INTEGRATE                                        *integrator-usages-integrate*
 
 **nvim-dap** - [x] configuration support `envFile` - [x] inject
 `core.variables`
+
+**session.nvim** - [x] auto save current launcher
 
 **lualine** - [x] launcher component
 
