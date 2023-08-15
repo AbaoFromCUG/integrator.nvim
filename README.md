@@ -8,13 +8,16 @@ A infrastructure of neovim IDE; A bridge between various neovim plugins
 **lazy.nvim**
 ```lua
 return {
-	"AbaoFromCUG/integrator.nvim",
+    "AbaoFromCUG/integrator.nvim",
     config = {
         dap = {
             enabled = true
         },
         overseer = {
             enabled = false
+        },
+        session = {
+            enabled = true
         }
     }
 }
@@ -32,17 +35,17 @@ return {
 
 ```lua
 require("integrator.commands").register_command("myplugin.spec", function()
-	return "result"
+    return "result"
 end)
 
 --for async style command variable, such as build task
 require("integrator.commands").register_command("myplugin.another", function()
-	local co = coroutine.running()
-	return coroutine.create(function()
-		vim.ui.select({ "A", "B" }, {}, function(item)
-			coroutine.resume(co, item)
-		end)
-	end)
+    local co = coroutine.running()
+    return coroutine.create(function()
+        vim.ui.select({ "A", "B" }, {}, function(item)
+            coroutine.resume(co, item)
+        end)
+    end)
 end)
 ```
 
@@ -87,6 +90,9 @@ In `.vscode/launch.json` or `dap.configurations`
 **nvim-dap**
 - [x] configuration support `envFile`
 - [x] inject `core.variables`
+
+**session.nvim**
+- [x] auto save current launcher
 
 
 **lualine**
