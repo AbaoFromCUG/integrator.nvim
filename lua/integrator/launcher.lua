@@ -66,7 +66,8 @@ function M.run()
     local current_file = vim.fn.expand("%:p")
     local dap = require("dap")
     if current_file and current_file:sub(-#"_spec.lua") == "_spec.lua" then
-        require("plenary.test_harness").test_directory(current_file)
+        local minimal = vim.loop.cwd() .. "/tests/minimal_init.lua"
+        require("plenary.test_harness").test_directory(current_file, { minimal_init = minimal })
     elseif dap.session() then
         dap.continue()
     elseif M.selected_configuration then

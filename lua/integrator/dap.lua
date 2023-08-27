@@ -16,37 +16,47 @@ function M.enrich_config_hook(config, on_config)
 end
 
 local function inject_adapter(adapter)
-    adapter._enrich_config = adapter.enrich_config
-    adapter.enrich_config = function(old_config, on_config)
-        if adapter._enrich_config then
-            adapter._enrich_config(old_config, function(new_config)
-                M.enrich_config_hook(new_config, on_config)
-            end)
-        else
-            M.enrich_config_hook(old_config, on_config)
+    if type(adapter) == "table" then
+        adapter._enrich_config = adapter.enrich_config
+        adapter.enrich_config = function(old_config, on_config)
+            if adapter._enrich_config then
+                adapter._enrich_config(old_config, function(new_config)
+                    M.enrich_config_hook(new_config, on_config)
+                end)
+            else
+                M.enrich_config_hook(old_config, on_config)
+            end
+        end
+        return adapter
+    elseif type(adapter) == "function" then
+        return function(on_resolved, config)
+            adapter(function(_config)
+                on_resolved(inject_adapter(_config))
+            end, config)
         end
     end
 end
 
----injuct dap
+---@class integrator.DapConfiguration: integrator.ModuleConfiguration
+
+---inject dap
 ---@param config? integrator.DapConfiguration
-function M.inject(config)
+function M.setup(config)
     --TODO: support config
     local dap = require("dap")
+    dap._adapters = dap._adapters or {}
     setmetatable(dap.adapters, {
         __index = function(_, k)
             return dap._adapters[k]
         end,
         __newindex = function(_, k, v)
-            dap._adapters = dap._adapters or {}
-            inject_adapter(v)
-            dap._adapters[k] = v
+            dap._adapters[k] = inject_adapter(v)
         end,
     })
     -- mock dap
-    dap.expand_config_variables = require("integrator.variable_resolve").resolve
-    for _, adapter in pairs(dap.adapters) do
-        inject_adapter(adapter)
+    dap.expand_config_variables = require("integrator.resolver").resolve
+    for index, adapter in pairs(dap.adapters) do
+        dap[index] = inject_adapter(adapter)
     end
 end
 

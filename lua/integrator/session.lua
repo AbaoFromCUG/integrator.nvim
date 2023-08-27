@@ -1,6 +1,10 @@
 local M = {}
 
-function M.inject(config)
+---@class integrator.SessionConfiguration: integrator.ModuleConfiguration
+
+---setup session, support necessed saved
+---@param config integrator.SessionConfiguration
+function M.setup(config)
     local launcher = require("integrator.launcher")
     local session = require("session")
 

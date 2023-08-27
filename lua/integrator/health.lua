@@ -3,15 +3,13 @@ local integrator = require("integrator")
 
 function M.check()
     vim.health.report_start("integrator.nvim")
-    if integrator.config.dap.enabled then
-        vim.health.report_ok("dap-launcher enabled")
-    else
-        vim.health.report_warn("dap-launcher disabled")
-    end
-    if integrator.config.session.enabled then
-        vim.health.report_ok("session auto saved enabled")
-    else
-        vim.health.report_warn("session auto saved disabled")
+    local modules = { "dap", "session", "settings" }
+    for _, module_name in ipairs(modules) do
+        if integrator.config[module_name].enabled then
+            vim.health.report_ok(string.format("%s enabled", module_name))
+        else
+            vim.health.report_warn(string.format("%s disabled", module_name))
+        end
     end
 end
 

@@ -13,10 +13,10 @@ return {
         dap = {
             enabled = true
         },
-        overseer = {
-            enabled = false
-        },
         session = {
+            enabled = true
+        },
+        settings = {
             enabled = true
         }
     }
@@ -84,6 +84,10 @@ In `.vscode/launch.json` or `dap.configurations`
     - [x] dap
     - [x] plenary.test_harness
     - [ ] more unit test
+
+**Settings**
+
+Support vscode's style settings file `.vscode/settings.json`, watch file via timer
 
 ## Integrate
 
