@@ -1,4 +1,4 @@
-*integrator.txt*          For NVIM v0.8.0          Last change: 2023 August 15
+*integrator.txt*          For NVIM v0.8.0          Last change: 2023 August 27
 
 ==============================================================================
 Table of Contents                               *integrator-table-of-contents*
@@ -22,10 +22,10 @@ A infrastructure of neovim IDE; A bridge between various neovim plugins
             dap = {
                 enabled = true
             },
-            overseer = {
-                enabled = false
-            },
             session = {
+                enabled = true
+            },
+            settings = {
                 enabled = true
             }
         }
@@ -87,6 +87,11 @@ In `.vscode/launch.json` or `dap.configurations`
 **Launcher** - [x] select configuration - [x] save/load state to session
 automatically - [ ] multiple type launch - [x] dap - [x] plenary.test_harness -
 [ ] more unit test
+
+**Settings**
+
+Support vscode’s style settings file `.vscode/settings.json`, watch file via
+timer
 
 
 INTEGRATE                                        *integrator-usages-integrate*
