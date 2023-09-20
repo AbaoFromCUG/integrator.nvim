@@ -1,4 +1,4 @@
-*integrator.txt*          For NVIM v0.8.0          Last change: 2023 August 27
+*integrator.txt*         For NVIM v0.8.0        Last change: 2023 September 20
 
 ==============================================================================
 Table of Contents                               *integrator-table-of-contents*
