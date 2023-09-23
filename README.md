@@ -1,8 +1,6 @@
 
 A infrastructure of neovim IDE; A bridge between various neovim plugins
 
-<!-- TOC -->
-
 # Install
 
 **lazy.nvim**
@@ -25,13 +23,12 @@ return {
 
 # Usages
 
+## Commands
 
-## Core
+- [x] commmand variables
+- [ ] integrate telescope
 
-**Commands**
-
-- [x] register commands
-- [ ] execute from telescope/cmd
+### Command Variables
 
 ```lua
 require("integrator.commands").register_command("myplugin.spec", function()
@@ -49,10 +46,13 @@ require("integrator.commands").register_command("myplugin.another", function()
 end)
 ```
 
-**Variables**
+
+## Variables
+
 - [x] builtin variables
 - [x] command variables
 - [ ] input variables
+
 
 In `.vscode/launch.json` or `dap.configurations`
 
@@ -64,6 +64,7 @@ In `.vscode/launch.json` or `dap.configurations`
             "name": "Desktop",
             "type": "cppdbg",
             "request": "launch",
+            "program": "${workspace}/build/a.out",
             "arg": [
                 "${command:myplugin.spec}",
                 "${command:myplugin.another}",
@@ -73,34 +74,21 @@ In `.vscode/launch.json` or `dap.configurations`
     ]
 }
 
-
 ```
 
 
-**Launcher**
+## Launcher
 - [x] select configuration
 - [x] save/load state to session automatically
 - [ ] multiple type launch
     - [x] dap
     - [x] plenary.test_harness
     - [ ] more unit test
-
-**Settings**
-
-Support vscode's style settings file `.vscode/settings.json`, watch file via timer
-
-## Integrate
-
-**nvim-dap**
-- [x] configuration support `envFile`
-- [x] inject `core.variables`
-
-**session.nvim**
-- [x] auto save current launcher
-
-
-**lualine**
-- [x] launcher component
+- [x] launcher component (lualine.nvim)
+- [x] auto save current launcher (session.nvim)
+- [ ] dap.nvim 
+    - [x] configuration support `envFile`
+    - [x] inject `core.variables`
 
 ```lua
 require("lualine").setup({
@@ -110,4 +98,38 @@ require("lualine").setup({
 		},
 	},
 })
+```
+`envFile` in `.vscode/launch.json`
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Desktop",
+            "type": "cppdbg",
+            "request": "launch",
+            "envFile": "${workspaceFolder}/.env",
+        }
+    ]
+}
+
+```
+
+
+## Settings
+
+Support vscode's style settings file `.vscode/settings.json`, watch file via timer
+
+`.vscode/settings.json`
+```json
+{
+    "editor.tabSize": 2
+}
+```
+
+
+```lua
+local settings = require("integrator.settings")
+settings.on_setting_changed("editor.tabSize", function(new_tabSize) end)
+settings.on_setting_changed("editor", function(new_editor) end)
 ```

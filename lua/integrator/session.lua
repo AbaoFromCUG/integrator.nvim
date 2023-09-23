@@ -17,6 +17,10 @@ function M.setup(config)
             return string.format("lua require('integrator.launcher').select_by_name('%s')", current_launch.name)
         end
     end)
+    session.register_hook("post_restore", "load_settings", function()
+        local settings = require("integrator.settings")
+        settings._load_settings()
+    end)
 end
 
 return M

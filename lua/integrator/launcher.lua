@@ -58,7 +58,7 @@ function M.select_by_name(name)
             end
         end
     end
-    vim.notify(string.format("no named (%s) launch", name), vim.log.levels.WARN, { title = "Integrator" })
+    vim.notify(string.format("no named [%s] launch", name), vim.log.levels.WARN, { title = "Integrator" })
 end
 
 ---start debug with selected_configuration

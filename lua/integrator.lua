@@ -31,7 +31,7 @@ function M.setup(config)
         require("integrator.session").setup(M.config.session)
     end
     if M.config.settings.enabled then
-        require("integrator.settings").setup(M.config.settings)
+        require("integrator.settings")._setup(M.config.settings)
     end
 end
 
