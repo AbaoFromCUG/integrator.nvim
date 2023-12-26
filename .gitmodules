@@ -1,0 +1,9 @@
+[submodule "lua/deps/json.lua"]
+	path = lua/deps/json.lua
+	url = https://github.com/actboy168/json.lua.git
+[submodule "lua/deps/json"]
+	path = lua/deps/json
+	url = https://github.com/actboy168/json.lua.git
+[submodule "lua/actboy168_json"]
+	path = lua/actboy168_json
+	url = https://github.com/actboy168/json.lua.git

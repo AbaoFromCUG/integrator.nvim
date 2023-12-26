@@ -1,4 +1,4 @@
-local json = require("integrator.json")
+local json = require("integrator.jsonc")
 
 ---@class integrator.SettingModule
 local M = {}
@@ -22,7 +22,13 @@ function M.on_setting_changed(key, handle)
     settings_watcher[key] = handle
 end
 
+---get settings with key
+---@param key? string
+---@return number|string|table
 function M.get_setting(key)
+    if key == nil then
+        return settings
+    end
     return settings:get(key)
 end
 
@@ -66,13 +72,11 @@ function M._setup(config)
 
     local unwatch = fs.watch(M.settings_file(), {
         on_added = function()
-            print("on_added")
             vim.schedule(function()
                 M._load_settings()
             end)
         end,
         on_changed = function()
-            print("on_changed")
             vim.schedule(function()
                 M._load_settings()
             end)
